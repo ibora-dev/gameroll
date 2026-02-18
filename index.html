@@ -1,21 +1,97 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Roblox Random Roll</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TP — Niveau & Puissance Sonore</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <main class="wrap">
+    <header class="header">
+      <h1>TP 🔊 Niveau sonore & puissance</h1>
+      <p class="subtitle">
+        Manipulation interactive : <b>P</b> → <b>I</b> → <b>L</b> (dB) + graphique 📈
+      </p>
+    </header>
 
-  <div class="box">
-    <h1>🎲 ROBLOX RANDOM</h1>
+    <section class="card">
+      <h2>1) Rappels (modèle simplifié)</h2>
 
-    <div id="result">?</div>
+      <div class="formula">
+        <div><b>Intensité</b> à distance <b>r</b> d’une source isotrope :</div>
+        <div class="eq">I = P / (4πr²)</div>
+      </div>
 
-    <button onclick="roll()">ROLL</button>
+      <div class="formula">
+        <div><b>Niveau sonore</b> (en dB) :</div>
+        <div class="eq">L = 10 · log₁₀(I / I₀)</div>
+        <div class="note">avec I₀ = 10⁻¹² W/m² (seuil d’audition)</div>
+      </div>
 
-    <a id="play" target="_blank">JOUER</a>
-  </div>
+      <p class="warn">
+        ⚠️ Modèle idéal (source isotrope, pas de réflexion, pas d’absorption de l’air).
+      </p>
+    </section>
+
+    <section class="grid">
+      <section class="card">
+        <h2>2) Manipulation</h2>
+
+        <div class="controls">
+          <label>
+            Puissance sonore P (W)
+            <input id="pSlider" type="range" min="-8" max="2" step="0.01" value="-2">
+            <div class="mini">
+              P = <span id="pValue"></span> W
+              <span class="hint">(échelle log : 10^x)</span>
+            </div>
+          </label>
+
+          <label>
+            Distance r (m)
+            <input id="rSlider" type="range" min="0.2" max="50" step="0.1" value="2">
+            <div class="mini">r = <span id="rValue"></span> m</div>
+          </label>
+        </div>
+
+        <div class="results">
+          <div class="res">
+            <div class="k">Intensité I</div>
+            <div class="v"><span id="iValue"></span> W/m²</div>
+          </div>
+          <div class="res">
+            <div class="k">Niveau L</div>
+            <div class="v"><span id="lValue"></span> dB</div>
+          </div>
+        </div>
+
+        <div class="pillrow">
+          <span id="labelSafety" class="pill">…</span>
+          <span id="labelRef" class="pill ghost">Règle : +10 dB ≈ ×10 intensité</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3) Graphique</h2>
+
+        <div class="tabs">
+          <button class="tab active" data-mode="distance">L en fonction de r</button>
+          <button class="tab" data-mode="power">L en fonction de P</button>
+        </div>
+
+        <canvas id="chart" width="760" height="420"></canvas>
+
+        <p class="small">
+          Astuce : regarde l’effet de <b>doubler r</b> 👉 le niveau baisse (≈ −6 dB en champ libre).
+        </p>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <p>✅ Site prêt pour GitHub Pages — modifiable à volonté.</p>
+    </footer>
+  </main>
 
   <script src="script.js"></script>
 </body>
